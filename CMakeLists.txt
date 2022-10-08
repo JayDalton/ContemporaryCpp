@@ -5,6 +5,8 @@ project(ContemporaryCpp LANGUAGES CXX VERSION 0.1)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_TOOLCHAIN_FILE "C:/Packages/scripts/buildsystems/vcpkg.cmake")
+
 set(SOURCE_FILES 
     common.h
     console.h
