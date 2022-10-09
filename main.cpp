@@ -7,6 +7,7 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
 
+
 auto main() -> int
 {
     std::string image_path = "PE_Image.jpg";

@@ -1,0 +1,72 @@
+{
+    "version": 5,
+    "cmakeMinimumRequired": {
+      "major": 3,
+      "minor": 24,
+      "patch": 0
+    },
+    "include": [
+    ],
+    "configurePresets": [
+      {
+        "name": "default",
+        "displayName": "Standard Config",
+        "description": "Standard build using generator",
+        "generator": "Visual Studio 17 2022",
+        "binaryDir": "${sourceDir}/build",
+        "architecture": "x64",
+        "environment": {
+          "MY_ENVIRONMENT_VARIABLE": "Test",
+          "PATH": "$env{HOME}/ninja/bin:$penv{PATH}"
+        },
+        "vendor": {
+          "example.com/ExampleIDE/1.0": {
+            "autoFormat": true
+          }
+        },
+        "toolchainFile": "c:/packages/scripts/buidsystems/vcpkg.cmake"
+      },
+      {
+        "name": "windows",
+        "inherits": "default",
+        "displayName": "Windows-only configuration",
+        "description": "This build is only available on Windows",
+        "generator": "Visual Studio 17 2022",
+        "binaryDir": "${sourceDir}/build",
+        "condition": {
+          "type": "equals",
+          "lhs": "${hostSystemName}",
+          "rhs": "Windows"
+        },
+        "cacheVariables": {
+            "CMAKE_TOOLCHAIN_FILE": {
+                "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "type": "FILEPATH"
+            }
+        }
+      }
+    ],
+    "buildPresets": [
+      {
+        "name": "default",
+        "configurePreset": "default"
+      },
+      {
+        "name": "windows",
+        "configurePreset": "windows"
+      }
+    ],
+    "testPresets": [
+      {
+        "name": "default",
+        "configurePreset": "default",
+        "output": {"outputOnFailure": true},
+        "execution": {"noTestsAction": "error", "stopOnFailure": true}
+      }
+    ],
+    "vendor": {
+      "example.com/ExampleIDE/1.0": {
+        "autoFormat": false
+      }
+    }
+  }

@@ -32,5 +32,4 @@
 *.app
 
 # Build Folder
-.vscode/
 build/
