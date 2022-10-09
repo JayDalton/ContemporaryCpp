@@ -15,6 +15,12 @@
         "generator": "Visual Studio 17 2022",
         "binaryDir": "${sourceDir}/build",
         "architecture": "x64",
+        "cacheVariables": {
+          "CMAKE_TOOLCHAIN_FILE":  {
+            "value": "/Packages/scripts/buidsystems/vcpkg.cmake",
+            "type": "FILEPATH"
+          }
+        },
         "environment": {
           "MY_ENVIRONMENT_VARIABLE": "Test",
           "PATH": "$env{HOME}/ninja/bin:$penv{PATH}"
