@@ -14,10 +14,10 @@
         "description": "Standard build using generator",
         "generator": "Visual Studio 17 2022",
         "binaryDir": "${sourceDir}/build",
-        "architecture": "x64",
+        "architecture": "Win32",
         "cacheVariables": {
           "CMAKE_TOOLCHAIN_FILE":  {
-            "value": "/Packages/scripts/buidsystems/vcpkg.cmake",
+            "value": "/Packages/scripts/buildsystems/vcpkg.cmake",
             "type": "FILEPATH"
           }
         },
@@ -30,7 +30,7 @@
             "autoFormat": true
           }
         },
-        "toolchainFile": "c:/packages/scripts/buidsystems/vcpkg.cmake"
+        "toolchainFile": "c:/packages/scripts/buildsystems/vcpkg.cmake"
       },
       {
         "name": "windows",
@@ -44,6 +44,7 @@
           "lhs": "${hostSystemName}",
           "rhs": "Windows"
         },
+        "architecture": "Win32",
         "cacheVariables": {
             "CMAKE_TOOLCHAIN_FILE": {
                 "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",

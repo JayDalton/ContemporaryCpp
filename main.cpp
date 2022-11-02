@@ -1,3 +1,5 @@
+// #include "windows.h"
+
 #include "console.h"
 
 // mkdir build && cd build && cmake -A Win32 .. && cmake --build . --config Release
@@ -10,7 +12,34 @@
 #define _WIN32_WINNT 0x0A00
 #include <asio.hpp>
 
-auto main() -> int
+
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavfilter/buffersink.h>
+#include <libavfilter/buffersrc.h>
+#include <libavutil/channel_layout.h>
+#include <libavutil/opt.h>
+
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_video.h>
+
+// static const char *filter_descr = "aresample=8000,aformat=sample_fmts=s16:channel_layouts=mono";
+// static const char *player       = "ffplay -f s16le -ar 8000 -ac 1 -";
+
+// static AVFormatContext *fmt_ctx;
+// static AVCodecContext *dec_ctx;
+// AVFilterContext *buffersink_ctx;
+// AVFilterContext *buffersrc_ctx;
+// AVFilterGraph *filter_graph;
+// static int audio_stream_index = -1;
+
+// AVCodecContext* pCodec;
+SDL_Window* pWindow;
+
+using WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
+
+
+auto main(int, char* []) -> int
 {
     print("Contemporary C++\n");
 
@@ -23,7 +52,45 @@ auto main() -> int
     print("timer gone\n");
 
 
+    // avcodec_alloc_context3(pCodec->codec);
+    // avcodec_free_context(&pCodec);
 
+    // pWindow = SDL_CreateWindow("Contemporary C++",
+    //     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, 
+    //   { SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI /*| SDL_WINDOW_RESIZABLE*/ }
+    // );
+    // SDL_DestroyWindow(pWindow);
+
+    SDL_Window *window;                    // Declare a pointer
+
+    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+
+    // Create an application window with the following settings:
+    window = SDL_CreateWindow(
+        "An SDL2 window",                  // window title
+        SDL_WINDOWPOS_UNDEFINED,           // initial x position
+        SDL_WINDOWPOS_UNDEFINED,           // initial y position
+        640,                               // width, in pixels
+        480,                               // height, in pixels
+        SDL_WINDOW_OPENGL                  // flags - see below
+    );
+
+    // Check that the window was successfully created
+    if (window == NULL) {
+        // In the case that the window could not be made...
+        printf("Could not create window: %s\n", SDL_GetError());
+        return 1;
+    }
+
+    // The window is open: could enter program loop here (see SDL_PollEvent())
+
+    SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
+
+    // Close and destroy the window
+    SDL_DestroyWindow(window);
+
+    // Clean up
+    SDL_Quit();
 
     return {};
     // Console app;
