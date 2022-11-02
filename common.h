@@ -7,6 +7,7 @@
 #include <iterator>
 #include <format>
 #include <fstream>
+#include <filesystem>
 #include <map>
 #include <mutex>
 #include <numeric>
