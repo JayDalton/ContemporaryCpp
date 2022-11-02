@@ -14,42 +14,37 @@
         "description": "Standard build using generator",
         "generator": "Visual Studio 17 2022",
         "binaryDir": "${sourceDir}/build",
-        "architecture": "Win32",
-        "cacheVariables": {
-          "CMAKE_TOOLCHAIN_FILE":  {
-            "value": "/Packages/scripts/buildsystems/vcpkg.cmake",
-            "type": "FILEPATH"
-          }
-        },
-        "environment": {
-          "MY_ENVIRONMENT_VARIABLE": "Test",
-          "PATH": "$env{HOME}/ninja/bin:$penv{PATH}"
-        },
-        "vendor": {
-          "example.com/ExampleIDE/1.0": {
-            "autoFormat": true
-          }
-        },
-        "toolchainFile": "c:/packages/scripts/buildsystems/vcpkg.cmake"
-      },
-      {
-        "name": "windows",
-        "inherits": "default",
-        "displayName": "Windows-only configuration",
-        "description": "This build is only available on Windows",
-        "generator": "Visual Studio 17 2022",
-        "binaryDir": "${sourceDir}/build",
         "condition": {
           "type": "equals",
           "lhs": "${hostSystemName}",
           "rhs": "Windows"
         },
-        "architecture": "Win32",
+        "architecture": {
+          "value": "Win32",
+          "strategy": "set"
+        },
+        "toolchainFile": "c:/packages/scripts/buildsystems/vcpkg.cmake",
         "cacheVariables": {
-            "CMAKE_TOOLCHAIN_FILE": {
-                "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-                "type": "FILEPATH"
-            }
+          "CMAKE_BUILD_TYPE": "Release",
+          "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+          "CMAKE_C_COMPILER": "cl",
+          "CMAKE_CXX_COMPILER": "cl",
+          "PATH_ASIO":  {
+            "value": "/Packages/installed/x86-windows/include",
+            "type": "FILEPATH"
+          },
+          "PATH_SDL2":  {
+            "value": "/Packages/installed/x86-windows/share/sdl2",
+            "type": "FILEPATH"
+          }
+        },
+        "environment": {
+          "SDL2_DIR": "/Packages/installed/x86-windows/share/sdl2"
+        },
+        "vendor": {
+          "microsoft.com/VisualStudioSettings/CMake/1.0": {
+            "hostOS": [ "Windows" ]
+          }
         }
       }
     ],
@@ -57,10 +52,6 @@
       {
         "name": "default",
         "configurePreset": "default"
-      },
-      {
-        "name": "windows",
-        "configurePreset": "windows"
       }
     ],
     "testPresets": [

@@ -55,11 +55,6 @@ auto main(int, char* []) -> int
     // avcodec_alloc_context3(pCodec->codec);
     // avcodec_free_context(&pCodec);
 
-    // pWindow = SDL_CreateWindow("Contemporary C++",
-    //     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 600, 400, 
-    //   { SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI /*| SDL_WINDOW_RESIZABLE*/ }
-    // );
-    // SDL_DestroyWindow(pWindow);
 
     SDL_Window *window;                    // Declare a pointer
 
