@@ -16,7 +16,9 @@ set(SOURCE_FILES
 
 add_executable(ContemporaryCpp ${SOURCE_FILES})
 
-# target_link_libraries(ContemporaryCpp ${OpenCV_LIBS} )
+# asio is a header-only, No need to use find_package()
+set(PATH_ASIO "C:/Packages/installed/x86-windows/include/asio")
+include_directories(${PATH_ASIO})
 
 # Set OpenCVConfig.cmake Search Directory
 set( OpenCV_DIR )

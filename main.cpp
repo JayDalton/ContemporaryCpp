@@ -7,6 +7,9 @@
 // cmake --build build32 --config Release
 // cmake --build build64 --config Release
 
+#define _WIN32_WINNT 0x0A00
+#include <asio.hpp>
+
 #include <opencv2/opencv.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgcodecs.hpp>
@@ -15,6 +18,16 @@
 auto main() -> int
 {
     print("Contemporary C++\n");
+
+    asio::io_context io;
+
+    asio::steady_timer t(io, asio::chrono::seconds(5));
+
+    t.wait();
+
+    print("timer gone\n");
+
+
 
     std::string image_path = "PE_Image.jpg";
     std::ifstream file(image_path);
