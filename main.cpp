@@ -15,10 +15,6 @@
 
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
-#include <libavfilter/buffersink.h>
-#include <libavfilter/buffersrc.h>
-#include <libavutil/channel_layout.h>
-#include <libavutil/opt.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
@@ -33,7 +29,7 @@
 // AVFilterGraph *filter_graph;
 // static int audio_stream_index = -1;
 
-// AVCodecContext* pCodec;
+AVCodecContext* pCodec;
 SDL_Window* pWindow;
 
 using WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
@@ -51,9 +47,14 @@ auto main(int, char* []) -> int
 
     print("timer gone\n");
 
+    AVFormatContext *pFormatContext = avformat_alloc_context();
+    if (!pFormatContext) {
+        print("ERROR could not allocate memory for Format Context");
+        return -1;
+    }
 
-    // avcodec_alloc_context3(pCodec->codec);
-    // avcodec_free_context(&pCodec);
+    avcodec_alloc_context3(pCodec->codec);
+    avcodec_free_context(&pCodec);
 
 
     SDL_Window *window;                    // Declare a pointer

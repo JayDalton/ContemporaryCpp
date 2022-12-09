@@ -23,14 +23,23 @@
           "value": "Win32",
           "strategy": "set"
         },
-        "toolchainFile": "c:/packages/scripts/buildsystems/vcpkg.cmake",
+        "toolchainFile": "/Packages/scripts/buildsystems/vcpkg.cmake",
         "cacheVariables": {
           "CMAKE_BUILD_TYPE": "Release",
-          "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-          "CMAKE_C_COMPILER": "cl",
-          "CMAKE_CXX_COMPILER": "cl",
-          "PATH_ASIO":  {
-            "value": "/Packages/installed/x86-windows/include",
+          "PATH_INCLUDE":  {
+            "value": "C:/Packages/installed/x86-windows/include",
+            "type": "FILEPATH"
+          },
+          "PATH_LIBS":  {
+            "value": "C:/Packages/installed/x86-windows/lib",
+            "type": "FILEPATH"
+          },
+          "PATH_FFMPEG_INC":  {
+            "value": "c:/Packages/packages/ffmpeg_x86-windows/include",
+            "type": "FILEPATH"
+          },
+          "PATH_FFMPEG_LIB":  {
+            "value": "c:/Packages/packages/ffmpeg_x86-windows/lib",
             "type": "FILEPATH"
           },
           "PATH_SDL2":  {
