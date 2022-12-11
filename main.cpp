@@ -2,12 +2,25 @@
 
 #include "console.h"
 
+// cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\Packages\scripts\buildsystems\vcpkg.cmake
+
 // mkdir build && cd build && cmake -A Win32 .. && cmake --build . --config Release
 
 // cmake -G "Visual Studio 16 2019" -A Win32 -S \path_to_source\ -B "build32"
 // cmake -G "Visual Studio 16 2019" -A x64 -S \path_to_source\ -B "build64"
 // cmake --build build32 --config Release
 // cmake --build build64 --config Release
+
+//    "dependencies": [
+//       "asio",
+//       "sdl2",
+//      {
+//       "name": "ffmpeg",
+//       "default-features": false,
+//       "features": [ "avcodec", "avformat" ]
+//      }
+//    ]
+
 
 #define _WIN32_WINNT 0x0A00
 #include <asio.hpp>
