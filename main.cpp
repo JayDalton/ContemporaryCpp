@@ -30,6 +30,8 @@
 // #include <libavcodec/avcodec.h>
 // #include <libavformat/avformat.h>
 
+#include "gui.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
 
@@ -74,6 +76,9 @@ auto main(int, char* []) -> int
     SDL_Window *window;                    // Declare a pointer
 
     SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+
+    auto win = gui::FancyWindow({ .Width = 1280, .Height = 1024 });
+    // auto win = gui::FancyWindow({ 1280, 1024 });
 
     // Create an application window with the following settings:
     window = SDL_CreateWindow(

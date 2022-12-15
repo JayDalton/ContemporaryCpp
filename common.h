@@ -20,8 +20,11 @@
 #include <thread>
 #include <unordered_set>
 #include <unordered_map>
+#include <utility>
 #include <variant>
 #include <vector>
+
+#include "c_ressource.h"
 
 using String = std::string;
 using StringList = std::vector<String>;
