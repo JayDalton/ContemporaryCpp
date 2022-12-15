@@ -57,7 +57,7 @@ auto main(int, char* []) -> int
 
 
     asio::io_context io;
-    asio::steady_timer t(io, asio::chrono::seconds(5));
+    asio::steady_timer t(io, asio::chrono::seconds(2));
 
     print("timer start\n");
     t.wait();
@@ -73,39 +73,44 @@ auto main(int, char* []) -> int
     // avcodec_free_context(&pCodec);
 
 
-    SDL_Window *window;                    // Declare a pointer
+    auto win = gui::FancyWindow({ .Width = 800, .Height = 600 });
 
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+    win.updateFrom({ .Width_  = 800, .Height_    = 600});
+    win.present({});
 
-    auto win = gui::FancyWindow({ .Width = 1280, .Height = 1024 });
-    // auto win = gui::FancyWindow({ 1280, 1024 });
-
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-        "An SDL2 window",                  // window title
-        SDL_WINDOWPOS_UNDEFINED,           // initial x position
-        SDL_WINDOWPOS_UNDEFINED,           // initial y position
-        640,                               // width, in pixels
-        480,                               // height, in pixels
-        SDL_WINDOW_OPENGL                  // flags - see below
-    );
-
-    // Check that the window was successfully created
-    if (window == NULL) {
-        // In the case that the window could not be made...
-        printf("Could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    // The window is open: could enter program loop here (see SDL_PollEvent())
 
     SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
 
-    // Close and destroy the window
-    SDL_DestroyWindow(window);
+    // SDL_Window *window;                    // Declare a pointer
 
-    // Clean up
-    SDL_Quit();
+    // SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
+
+    // // Create an application window with the following settings:
+    // window = SDL_CreateWindow(
+    //     "An SDL2 window",                  // window title
+    //     SDL_WINDOWPOS_UNDEFINED,           // initial x position
+    //     SDL_WINDOWPOS_UNDEFINED,           // initial y position
+    //     640,                               // width, in pixels
+    //     480,                               // height, in pixels
+    //     SDL_WINDOW_OPENGL                  // flags - see below
+    // );
+
+    // // Check that the window was successfully created
+    // if (window == NULL) {
+    //     // In the case that the window could not be made...
+    //     printf("Could not create window: %s\n", SDL_GetError());
+    //     return 1;
+    // }
+
+    // // The window is open: could enter program loop here (see SDL_PollEvent())
+
+    // SDL_Delay(3000);  // Pause execution for 3000 milliseconds, for example
+
+    // // Close and destroy the window
+    // SDL_DestroyWindow(window);
+
+    // // Clean up
+    // SDL_Quit();
 
     return {};
     // Console app;

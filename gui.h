@@ -56,6 +56,8 @@ struct FancyWindow
    {
       const auto Viewport = centeredBox(Dimensions);
 
+      print("FancyWindow: {} {}\n", Viewport.Height, Viewport.Width);
+
       Window_   = { "Look at me!",
                Viewport.x, Viewport.y, Viewport.Width, Viewport.Height,
                   SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN };
@@ -69,17 +71,21 @@ struct FancyWindow
 
    void updateFrom(const video::FrameHeader & Header) noexcept 
    {
-      video::PixelFormat f;
       if (not Header.isFirstFrame())
+      {
+         print("first empty");
          return;
+      }
 
       if (Header.hasNoPixels()) 
       {
-         SDL_HideWindow(Window_);
-         Texture_ = {};
+      //    print("frame empty");
+      //    SDL_HideWindow(Window_);
+      //    Texture_ = {};
 
-      } else {
+      // } else {
 
+         print("show frame");
          Width_        = Header.Width_;
          Height_       = Header.Height_;
          PixelsPitch_  = Header.LinePitch_;
