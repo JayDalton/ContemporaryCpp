@@ -75,7 +75,7 @@ auto main(int, char* []) -> int
 
     auto win = gui::FancyWindow({ .Width = 800, .Height = 600 });
 
-    win.updateFrom({ .Width_  = 800, .Height_    = 600});
+    win.updateFrom({ .Width_ = 800, .Height_ = 600, .LinePitch_ = 1});
     win.present({});
 
 

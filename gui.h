@@ -8,12 +8,15 @@
 #include <SDL2/SDL_video.h>
 
 namespace sdl {
+
    using Window   = stdex::c_resource<SDL_Window, SDL_CreateWindow, SDL_DestroyWindow>;
    using Renderer = stdex::c_resource<SDL_Renderer, SDL_CreateRenderer, SDL_DestroyRenderer>;
    using Texture  = stdex::c_resource<SDL_Texture, SDL_CreateTexture, SDL_DestroyTexture>;
+
 }
 
 namespace gui {
+
 struct tDimensions {
 	uint16_t Width;
 	uint16_t Height;
@@ -27,7 +30,8 @@ static constexpr bool successful(int Code) {
 }
 
 static auto centeredBox(tDimensions Dimensions,
-                        int Monitor = SDL_GetNumVideoDisplays()) noexcept {
+   int Monitor = SDL_GetNumVideoDisplays()) noexcept 
+{
 	struct Box {
 		int Width{0};
 		int Height{0};
@@ -52,21 +56,25 @@ static auto centeredBox(tDimensions Dimensions,
 // renders the video frames
 struct FancyWindow 
 {
-	explicit FancyWindow(tDimensions Dimensions) noexcept
+	explicit FancyWindow(tDimensions dimensions) noexcept
    {
-      const auto Viewport = centeredBox(Dimensions);
+      const auto viewport = centeredBox(dimensions);
 
-      print("FancyWindow: {} {}\n", Viewport.Height, Viewport.Width);
+      print("FancyWindow: {} {}\n", viewport.Height, viewport.Width);
 
-      Window_   = { "Look at me!",
-               Viewport.x, Viewport.y, Viewport.Width, Viewport.Height,
-                  SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN };
-      Renderer_ = { Window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
+      m_window = { 
+         "Look at me!",
+         viewport.x, viewport.y, 
+         viewport.Width, viewport.Height,
+         SDL_WINDOW_RESIZABLE | SDL_WINDOW_HIDDEN 
+      };
 
-      SDL_SetWindowMinimumSize(Window_, Viewport.Width, Viewport.Height);
-      SDL_RenderSetLogicalSize(Renderer_, Viewport.Width, Viewport.Height);
-      SDL_RenderSetIntegerScale(Renderer_, SDL_TRUE);
-      SDL_SetRenderDrawColor(Renderer_, 240, 240, 240, 240);
+      m_renderer = { m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC };
+
+      SDL_SetWindowMinimumSize(m_window, viewport.Width, viewport.Height);
+      SDL_RenderSetLogicalSize(m_renderer, viewport.Width, viewport.Height);
+      SDL_RenderSetIntegerScale(m_renderer, SDL_TRUE);
+      SDL_SetRenderDrawColor(m_renderer, 40, 40, 40, 40);
    }
 
    void updateFrom(const video::FrameHeader & Header) noexcept 
@@ -79,26 +87,26 @@ struct FancyWindow
 
       if (Header.hasNoPixels()) 
       {
-      //    print("frame empty");
-      //    SDL_HideWindow(Window_);
-      //    Texture_ = {};
+         print("frame empty");
+         SDL_HideWindow(m_window);
+         m_texture = {};
 
-      // } else {
+      } else {
 
          print("show frame");
-         Width_        = Header.Width_;
-         Height_       = Header.Height_;
-         PixelsPitch_  = Header.LinePitch_;
-         SourceFormat_ = Header.Format_ == to_underlying(video::PixelFormat::RGBA)
+         m_width        = Header.Width_;
+         m_height       = Header.Height_;
+         m_pixelPitch  = Header.LinePitch_;
+         m_sourceFormat = Header.Format_ == to_underlying(video::PixelFormat::RGBA)
                            ? SDL_PIXELFORMAT_ABGR8888
                            : SDL_PIXELFORMAT_ARGB8888;
 
-         // Texture_ = sdl::Texture(Renderer_, TextureFormat, SDL_TEXTUREACCESS_STREAMING,
-         //                         Width_, Height_);
+         // m_texture = sdl::Texture(m_renderer, TextureFormat, SDL_TEXTUREACCESS_STREAMING,
+         //                         m_width, m_height);
 
-         SDL_SetWindowMinimumSize(Window_, Width_, Height_);
-         SDL_RenderSetLogicalSize(Renderer_, Width_, Height_);
-         SDL_ShowWindow(Window_);
+         SDL_SetWindowMinimumSize(m_window, m_width, m_height);
+         SDL_RenderSetLogicalSize(m_renderer, m_width, m_height);
+         SDL_ShowWindow(m_window);
       }
    }
 
@@ -106,25 +114,25 @@ struct FancyWindow
       void * TextureData;
       int TexturePitch;
 
-      SDL_RenderClear(Renderer_);
-      if (successful(SDL_LockTexture(Texture_, nullptr, &TextureData, &TexturePitch))) 
+      SDL_RenderClear(m_renderer);
+      if (successful(SDL_LockTexture(m_texture, nullptr, &TextureData, &TexturePitch))) 
       {
-         SDL_ConvertPixels(Width_, Height_, SourceFormat_, Pixels.data(), PixelsPitch_,
+         SDL_ConvertPixels(m_width, m_height, m_sourceFormat, Pixels.data(), m_pixelPitch,
                            TextureFormat, TextureData, TexturePitch);
-         SDL_UnlockTexture(Texture_);
-         SDL_RenderCopy(Renderer_, Texture_, nullptr, nullptr);
+         SDL_UnlockTexture(m_texture);
+         SDL_RenderCopy(m_renderer, m_texture, nullptr, nullptr);
       }
-      SDL_RenderPresent(Renderer_);
+      SDL_RenderPresent(m_renderer);
    }
 
 private:
-	sdl::Window Window_;
-	sdl::Renderer Renderer_;
-	sdl::Texture Texture_;
-	int Width_;
-	int Height_;
-	int PixelsPitch_;
-	int SourceFormat_;
+	sdl::Window m_window;
+	sdl::Renderer m_renderer;
+	sdl::Texture m_texture;
+	int m_width;
+	int m_height;
+	int m_pixelPitch;
+	int m_sourceFormat;
 };
 
 bool isAlive() noexcept {
