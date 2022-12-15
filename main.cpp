@@ -2,7 +2,8 @@
 
 #include "console.h"
 
-// cmake -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\Packages\scripts\buildsystems\vcpkg.cmake
+// cmake -A Win32 -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\Packages\scripts\buildsystems\vcpkg.cmake
+// cmake --build .\build\ --config Release
 
 // mkdir build && cd build && cmake -A Win32 .. && cmake --build . --config Release
 
@@ -26,8 +27,8 @@
 #include <asio.hpp>
 
 
-#include <libavcodec/avcodec.h>
-#include <libavformat/avformat.h>
+// #include <libavcodec/avcodec.h>
+// #include <libavformat/avformat.h>
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_video.h>
@@ -42,7 +43,7 @@
 // AVFilterGraph *filter_graph;
 // static int audio_stream_index = -1;
 
-AVCodecContext* pCodec;
+// AVCodecContext* pCodec;
 SDL_Window* pWindow;
 
 using WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
@@ -52,22 +53,22 @@ auto main(int, char* []) -> int
 {
     print("Contemporary C++\n");
 
-    asio::io_context io;
 
+    asio::io_context io;
     asio::steady_timer t(io, asio::chrono::seconds(5));
 
+    print("timer start\n");
     t.wait();
-
     print("timer gone\n");
 
-    AVFormatContext *pFormatContext = avformat_alloc_context();
-    if (!pFormatContext) {
-        print("ERROR could not allocate memory for Format Context");
-        return -1;
-    }
+    // AVFormatContext *pFormatContext = avformat_alloc_context();
+    // if (!pFormatContext) {
+    //     print("ERROR could not allocate memory for Format Context");
+    //     return -1;
+    // }
 
-    avcodec_alloc_context3(pCodec->codec);
-    avcodec_free_context(&pCodec);
+    // avcodec_alloc_context3(pCodec->codec);
+    // avcodec_free_context(&pCodec);
 
 
     SDL_Window *window;                    // Declare a pointer
