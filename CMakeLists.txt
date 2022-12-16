@@ -14,9 +14,6 @@ pkg_check_modules(LIBAV REQUIRED IMPORTED_TARGET
     # libavfilter
     libavformat
     libavcodec
-    # libswresample
-    # libswscale
-    # libavutil
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
@@ -30,11 +27,13 @@ target_link_libraries(${PROJECT_NAME}
 )
 
 target_sources(${PROJECT_NAME} PRIVATE
+  "asio.h"
   "c_ressource.h"
   "common.h"
   "console.h"
   "gui.h"
   "main.cpp"
+  "server.h"
   "video.h"
   "videodecoder.h"
   "videoframe.h"

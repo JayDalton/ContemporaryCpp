@@ -54,10 +54,8 @@ private:
 	using Constructor = decltype(ConstructFunction);
 	using Destructor  = decltype(DestructFunction);
 
-	static_assert(std::is_function_v<std::remove_pointer_t<Constructor>>,
-	              "I need a C function");
-	static_assert(std::is_function_v<std::remove_pointer_t<Destructor>>,
-	              "I need a C function");
+	static_assert(std::is_function_v<std::remove_pointer_t<Constructor>>,  "I need a C function");
+	static_assert(std::is_function_v<std::remove_pointer_t<Destructor>>,  "I need a C function");
 
 	static constexpr Constructor construct = ConstructFunction;
 	static constexpr Destructor destruct   = DestructFunction;
@@ -70,14 +68,14 @@ public:
 
 	[[nodiscard]] constexpr c_resource() noexcept = default;
 	[[nodiscard]] constexpr explicit c_resource(construct_t) noexcept
-	    requires std::is_invocable_r_v<T *, Constructor>
-	: ptr_{ construct() } {}
+	   requires std::is_invocable_r_v<T *, Constructor>
+		: ptr_{ construct() } {}
 
 	template <typename... Ts>
-	    requires(sizeof...(Ts) > 0 && std::is_invocable_r_v<T *, Constructor, Ts...>)
+	   requires(sizeof...(Ts) > 0 && std::is_invocable_r_v<T *, Constructor, Ts...>)
 	[[nodiscard]] constexpr explicit(sizeof...(Ts) == 1)
-	    c_resource(Ts &&... Args) noexcept
-	: ptr_{ construct(static_cast<Ts &&>(Args)...) } {}
+	   c_resource(Ts &&... Args) noexcept
+		: ptr_{ construct(static_cast<Ts &&>(Args)...) } {}
 
 	template <typename... Ts>
 	    requires(sizeof...(Ts) > 0 &&
@@ -102,6 +100,7 @@ public:
 		ptr_       = other.ptr_;
 		other.ptr_ = null;
 	};
+
 	constexpr c_resource & operator=(c_resource && rhs) noexcept {
 		if (this != &rhs) {
 			_destruct(ptr_);
@@ -110,6 +109,7 @@ public:
 		}
 		return *this;
 	};
+
 	constexpr void swap(c_resource & other) noexcept {
 		auto ptr   = ptr_;
 		ptr_       = other.ptr_;
