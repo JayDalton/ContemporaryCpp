@@ -4,6 +4,12 @@
    "version-string": "0.1.0",
    "dependencies": [
       "asio",
-      "sdl2"
+      "sdl2",
+      "pkgconf",
+      {
+       "name": "ffmpeg",
+       "default-features": false,
+       "features": [ "avcodec", "avformat" ]
+      }
    ]
 }

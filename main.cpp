@@ -3,7 +3,7 @@
 #include "console.h"
 
 // cmake -A Win32 -B build -S . -DCMAKE_TOOLCHAIN_FILE=C:\Packages\scripts\buildsystems\vcpkg.cmake
-// cmake --build .\build\ --config Release
+// && cmake --build .\build\ --config Release
 
 // mkdir build && cd build && cmake -A Win32 .. && cmake --build . --config Release
 
@@ -46,9 +46,9 @@
 // static int audio_stream_index = -1;
 
 // AVCodecContext* pCodec;
-SDL_Window* pWindow;
+// SDL_Window* pWindow;
 
-using WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
+// using WindowPtr = std::unique_ptr<SDL_Window, decltype(&SDL_DestroyWindow)>;
 
 
 auto main(int, char* []) -> int
