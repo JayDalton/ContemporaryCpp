@@ -60,10 +60,8 @@ namespace video {
    };
 
    static_assert(sizeof(FrameHeader) == FrameHeader::SizeBytes);
-   static_assert(std::is_trivial_v<FrameHeader>,
-               "Please keep me trivial"); // guarantee relocatability!
-   static_assert(std::is_trivially_destructible_v<FrameHeader>,
-               "Please keep me 'implicit lifetime'");
+   static_assert(std::is_trivial_v<FrameHeader>, "Please keep me trivial"); // guarantee relocatability!
+   static_assert(std::is_trivially_destructible_v<FrameHeader>, "Please keep me 'implicit lifetime'");
 
    using tPixels = std::span<const std::byte>;
 
